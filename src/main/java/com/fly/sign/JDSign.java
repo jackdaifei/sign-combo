@@ -1,8 +1,11 @@
 package com.fly.sign;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.fly.model.MyHeader;
 import com.fly.utils.CommonUtils;
+import com.fly.utils.HeaderUtils;
 import com.fly.utils.HttpUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;
@@ -18,8 +21,7 @@ public class JDSign {
 
     public static void main(String[] args) {
         String cookie = "pin=jackdaifei_m;wskey=AAFbT9AfAEAWGgHkSanFbpfjKXgOiumMdr6hsmtr2NT8oMdHMGiyza11FEh5pRhZjDKGmIvaBKfLN7WYk7n3dJOtSXVkvGPJ;whwswswws=zfKxNSJYpkuxQ2l5Cz9M6SAKwbIQBt9YIF6Fj/545EHilrLsep8ki5XL/aLuKoCgVUaOazA9eTDSkefFN3XT7Xg==;unionwsws={\"devicefinger\":\"eidA2B700114ODY4NjAyMDQ3MTI1NTE3MA==0I7u8gZRJfxuaDVhagH3uQjoCRqDZgV4oZflP8e\\/6uphn9NxD4vvpXaqrAFb0+Oog6wilp42RLPGbnAB\",\"jmafinger\":\"zfKxNSJYpkuxQ2l5Cz9M6SAKwbIQBt9YIF6Fj\\/545EHilrLsep8ki5XL\\/aLuKoCgVUaOazA9eTDSkefFN3XT7Xg==\"};";
-//        signBeanIndex(cookie);
-
+        // signBeanIndex(cookie);
         plantBeanIndex(cookie);
     }
 
@@ -35,7 +37,7 @@ public class JDSign {
             Header[] appHeaders = builderHeader(appCookie);
             List<NameValuePair> paramList = buildParamList(reqBody);
 
-            signResult = HttpUtils.postResponse(url, paramList, appHeaders);
+            signResult = HttpUtils.postMethod(url, paramList, appHeaders);
             JSONObject signJson = JSONObject.parseObject(signResult);
             if (null != signJson) {
                 String code = signJson.getString("code");
@@ -65,7 +67,7 @@ public class JDSign {
             Header[] appHeaders = builderHeader(appCookie);
             List<NameValuePair> paramList = buildParamList(reqBody);
 
-            plantResult = HttpUtils.postResponse(url, paramList, appHeaders);
+            plantResult = HttpUtils.postMethod(url, paramList, appHeaders);
 
             JSONObject plantJson = JSONObject.parseObject(plantResult);
             if (null != plantJson) {
@@ -143,7 +145,7 @@ public class JDSign {
             Header[] appHeaders = builderHeader(appCookie);
             List<NameValuePair> paramList = buildParamList(reqBody);
 
-            receiveResult = HttpUtils.postResponse(url, paramList, appHeaders);
+            receiveResult = HttpUtils.postMethod(url, paramList, appHeaders);
 
             JSONObject receiveJson = JSONObject.parseObject(receiveResult);
             if (null != receiveJson) {
@@ -175,7 +177,7 @@ public class JDSign {
             Header[] appHeaders = builderHeader(appCookie);
             List<NameValuePair> paramList = buildParamList(reqBody);
 
-            cultureResult = HttpUtils.postResponse(url, paramList, appHeaders);
+            cultureResult = HttpUtils.postMethod(url, paramList, appHeaders);
 
             JSONObject cultureJson = JSONObject.parseObject(cultureResult);
             if (null != cultureJson) {
@@ -216,20 +218,17 @@ public class JDSign {
     }
 
     private static Header[] builderHeader(String cookie) {
-
-        List<Header> headerList = new ArrayList<>();
-        headerList.add(new BasicHeader("Connection", "Keep-Alive"));
-        headerList.add(new BasicHeader("Cookie", cookie));
-        headerList.add(new BasicHeader("Charset", "UTF-8"));
-        headerList.add(new BasicHeader("Accept-Encoding", "gzip,deflate"));
-        headerList.add(new BasicHeader("jdc-backup", cookie));
-        headerList.add(new BasicHeader("Cache-Control", "no-cache"));
-        headerList.add(new BasicHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8"));
-        headerList.add(new BasicHeader("Host", "api.m.jd.com"));
-        headerList.add(new BasicHeader("User-Agent", "okhttp/3.6.0"));
-
-        Header[] headers = new Header[headerList.size()];
-        return headerList.toArray(headers);
+        MyHeader myHeader = new MyHeader();
+        myHeader.setConnection("Keep-Alive");
+        myHeader.setCookie(cookie);
+        myHeader.setCharset("UTF-8");
+        myHeader.setAcceptEncoding("gzip,deflate");
+        myHeader.setJdcBackup(cookie);
+        myHeader.setCacheControl("no-cache");
+        myHeader.setContentType("application/x-www-form-urlencoded; charset=UTF-8");
+        myHeader.setHost("api.m.jd.com");
+        myHeader.setUserAgent("okhttp/3.6.0");
+        return HeaderUtils.extHeaderArray(myHeader);
     }
 
 }
