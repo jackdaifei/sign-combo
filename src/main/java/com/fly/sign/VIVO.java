@@ -26,7 +26,7 @@ public class VIVO {
         if (null != responseJson) {
             int retcode = responseJson.getIntValue("retcode");
             if (retcode == 0) {
-                log.info("VIVO sign success --->>> {}", responseJson);
+                log.info("VIVO sign success --->>> totalReward={}", responseJson.getJSONObject("data").getIntValue("totalReward"));
                 return;
             }
         }

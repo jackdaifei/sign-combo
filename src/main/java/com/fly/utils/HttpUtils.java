@@ -46,6 +46,14 @@ public class HttpUtils {
         return postMethod(url, paramList, headers, null, 0);
     }
 
+    public static JSONObject postMethodJson(String url, List<NameValuePair> paramList, Header[] headers) {
+        String postResponseStr = postMethod(url, paramList, headers, null, 0);
+        if (StringUtils.isNotEmpty(postResponseStr)) {
+            return JSONObject.parseObject(postResponseStr);
+        }
+        return null;
+    }
+
     public static String postMethod(String url, String params, Header[] headers) {
         return postMethod(url, params, headers, null, 0);
     }
@@ -101,7 +109,7 @@ public class HttpUtils {
         CloseableHttpClient client = buildHttpClient(requestConfig);
         // 执行请求
         String responseStr = executeRequest(client, httpPost);
-        log.info("postMethod response --->>> {}", responseStr);
+        log.info("postExecute response --->>> {}", responseStr);
         return responseStr;
     }
 
