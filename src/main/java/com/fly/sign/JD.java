@@ -17,10 +17,12 @@ import java.util.List;
 public class JD {
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         String cookie = "pin=jackdaifei_m;wskey=AAFbT9AfAEAWGgHkSanFbpfjKXgOiumMdr6hsmtr2NT8oMdHMGiyza11FEh5pRhZjDKGmIvaBKfLN7WYk7n3dJOtSXVkvGPJ;whwswswws=zfKxNSJYpkuxQ2l5Cz9M6SAKwbIQBt9YIF6Fj/545EHilrLsep8ki5XL/aLuKoCgVUaOazA9eTDSkefFN3XT7Xg==;unionwsws={\"devicefinger\":\"eidA2B700114ODY4NjAyMDQ3MTI1NTE3MA==0I7u8gZRJfxuaDVhagH3uQjoCRqDZgV4oZflP8e\\/6uphn9NxD4vvpXaqrAFb0+Oog6wilp42RLPGbnAB\",\"jmafinger\":\"zfKxNSJYpkuxQ2l5Cz9M6SAKwbIQBt9YIF6Fj\\/545EHilrLsep8ki5XL\\/aLuKoCgVUaOazA9eTDSkefFN3XT7Xg==\"};";
         // signBeanIndex(cookie);
         plantBeanIndex(cookie);
+
+        // productTaskList(cookie);
     }
 
     /**
@@ -94,8 +96,10 @@ public class JD {
                     String state = timeNutrientsRes.getString("state");
                     if ("1".equals(state)) {
                         System.out.println("有可领取的营养液！！！");
+                        int sleepNum = CommonUtils.randomNum(3000, 14500);
+                        System.out.println("领取前随机sleep " + sleepNum + "ms");
                         // 随机停几秒
-                        Thread.sleep(CommonUtils.randomNum(3000, 14500));
+                        Thread.sleep(sleepNum);
                         // 获取培养液, 并返回获取结果
                         boolean isSuccess = receiveNutrients(appCookie, roundId);
                         if (!isSuccess) {
@@ -117,7 +121,7 @@ public class JD {
                     // 使用培养液
                     if (nutrients > 0) {
                         int sleepTime = CommonUtils.randomNum(3500, 13600);
-                        System.out.println("随机sleep[" + sleepTime + "]ms");
+                        System.out.println("随机sleep " + sleepTime + "ms");
                         Thread.sleep(sleepTime);
                         boolean useSuccess = cultureBean(appCookie, roundId);
                         if (!useSuccess) {
@@ -127,7 +131,7 @@ public class JD {
                         }
                     }
 
-                    purchaseRewardTask(appCookie, roundId);
+                    // purchaseRewardTask(appCookie, roundId);
                 }
             }
 
@@ -144,7 +148,7 @@ public class JD {
     private static boolean receiveNutrients(String appCookie, String roundId) {
         String receiveResult = "";
         try {
-            String url = "http://api.m.jd.com/client.action?functionId=receiveNutrients&clientVersion=8.1.2&build=67636&client=android&d_brand=vivo&d_model=vivoZ1&osVersion=9&screen=2201*1080&partner=vivo&androidId=c151521cf7c1430f&installtionId=73e5ce8937244403ae1e93dc8d3ecf69&sdkVersion=28&lang=zh_CN&uuid=868602047125517-20f77c733fa1&area=22_1930_50949_52154&networkType=wifi&wifiBssid=bde5dcf42ebb1788f7cbf43dee7f84bb&st=1561638112810&sign=c4440ab134543d51873f9b346a3d6b7b&sv=112";
+            String url = "http://api.m.jd.com/client.action?functionId=receiveNutrients&clientVersion=8.1.2&build=67636&client=android&d_brand=vivo&d_model=vivoZ1&osVersion=9&screen=2201*1080&partner=vivo&androidId=c151521cf7c1430f&installtionId=73e5ce8937244403ae1e93dc8d3ecf69&sdkVersion=28&lang=zh_CN&uuid=868602047125517-20f77c733fa1&area=22_1930_50949_52153&networkType=wifi&wifiBssid=bde5dcf42ebb1788f7cbf43dee7f84bb&st=1562133242639&sign=d587f3bcee4fbfa0fa14c0355702d6e3&sv=120";
             String reqBody = "{\"monitor_refer\":\"plant_receiveNutrients\",\"monitor_source\":\"plant_app_plant_index\",\"roundId\":\"" + roundId + "\"}";
             Header[] appHeaders = builderHeader(appCookie);
             List<NameValuePair> paramList = buildParamList(reqBody);
@@ -176,7 +180,7 @@ public class JD {
     private static boolean cultureBean(String appCookie, String roundId) {
         String cultureResult = "";
         try {
-            String url = "http://api.m.jd.com/client.action?functionId=cultureBean&clientVersion=8.1.2&build=67636&client=android&d_brand=vivo&d_model=vivoZ1&osVersion=9&screen=2201*1080&partner=vivo&androidId=c151521cf7c1430f&installtionId=73e5ce8937244403ae1e93dc8d3ecf69&sdkVersion=28&lang=zh_CN&uuid=868602047125517-20f77c733fa1&area=22_1930_50949_52153&networkType=wifi&wifiBssid=dad94a9d1e16905aac6420087a4877cd&st=1562086292549&sign=c66b138816a2e7735f7a049ce00975e6&sv=100";
+            String url = "http://api.m.jd.com/client.action?functionId=cultureBean&clientVersion=8.1.2&build=67636&client=android&d_brand=vivo&d_model=vivoZ1&osVersion=9&screen=2201*1080&partner=vivo&androidId=c151521cf7c1430f&installtionId=73e5ce8937244403ae1e93dc8d3ecf69&sdkVersion=28&lang=zh_CN&uuid=868602047125517-20f77c733fa1&area=22_1930_50949_52153&networkType=wifi&wifiBssid=bde5dcf42ebb1788f7cbf43dee7f84bb&st=1562133327154&sign=7e7fa50d3f9d796ff2ccfac027279309&sv=110";
             String reqBody = "{\"monitor_refer\":\"plant_index\",\"monitor_source\":\"plant_app_plant_index\",\"roundId\":\"" + roundId + "\"}";
             System.out.println(roundId);
             Header[] appHeaders = builderHeader(appCookie);
@@ -214,8 +218,11 @@ public class JD {
     private static void purchaseRewardTask(String appCookie, String roundId) {
         String purchaseResult = "";
         try {
-            String url = "http://api.m.jd.com/client.action?functionId=purchaseRewardTask&clientVersion=8.1.2&build=67636&client=android&d_brand=vivo&d_model=vivoZ1&osVersion=9&screen=2201*1080&partner=vivo&androidId=c151521cf7c1430f&installtionId=73e5ce8937244403ae1e93dc8d3ecf69&sdkVersion=28&lang=zh_CN&uuid=868602047125517-20f77c733fa1&area=22_1930_50949_52154&networkType=wifi&wifiBssid=unknown&st=1561796734430&sign=ff5ff58e8639e1d21b7e6c494e78c05b&sv=111";
+            // String url = "http://api.m.jd.com/client.action?functionId=purchaseRewardTask&clientVersion=8.1.2&build=67636&client=android&d_brand=vivo&d_model=vivoZ1&osVersion=9&screen=2201*1080&partner=vivo&androidId=c151521cf7c1430f&installtionId=73e5ce8937244403ae1e93dc8d3ecf69&sdkVersion=28&lang=zh_CN&uuid=868602047125517-20f77c733fa1&area=22_1930_50949_52154&networkType=wifi&wifiBssid=unknown&st=1561796734430&sign=ff5ff58e8639e1d21b7e6c494e78c05b&sv=111";
+            String url = "http://api.m.jd.com/client.action?functionId=purchaseRewardTask&clientVersion=8.1.2&build=67636&client=android&d_brand=vivo&d_model=vivoZ1&osVersion=9&screen=2201*1080&partner=vivo&androidId=c151521cf7c1430f&installtionId=73e5ce8937244403ae1e93dc8d3ecf69&sdkVersion=28&lang=zh_CN&uuid=868602047125517-20f77c733fa1&area=22_1930_50949_52153&networkType=wifi&wifiBssid=bde5dcf42ebb1788f7cbf43dee7f84bb&st=1562203751288&sign=a75d78719e262c0e08bebee7d06b069d&sv=122";
             String reqBody = "{\"monitor_refer\":\"plant_purchaseRewardTask\",\"monitor_source\":\"plant_app_plant_index\",\"roundId\":\"" + roundId + "\"}";
+            // String reqBody = "{\"monitor_refer\":\"plant_purchaseRewardTask\",\"monitor_source\":\"plant_app_plant_index\",\"roundId\":\"ru72anf4ao52moqbns6eertieu\"}";
+
             Header[] appHeaders = builderHeader(appCookie);
             List<NameValuePair> paramList = buildParamList(reqBody);
             purchaseResult = HttpUtils.postMethod(url, paramList, appHeaders);
@@ -230,7 +237,7 @@ public class JD {
     }
 
     private static void productTaskList(String appCookie) throws Exception {
-        String url = "http://api.m.jd.com/client.action?functionId=productTaskList&clientVersion=8.1.2&build=67636&client=android&d_brand=vivo&d_model=vivoZ1&osVersion=9&screen=2201*1080&partner=vivo&androidId=c151521cf7c1430f&installtionId=73e5ce8937244403ae1e93dc8d3ecf69&sdkVersion=28&lang=zh_CN&uuid=868602047125517-20f77c733fa1&area=22_1930_50949_52153&networkType=wifi&wifiBssid=bde5dcf42ebb1788f7cbf43dee7f84bb&st=1562148264318&sign=f3a06335a6fcedf45b18c295a6a1de16&sv=101";
+        String url = "http://api.m.jd.com/client.action?functionId=productTaskList&clientVersion=8.1.2&build=67636&client=android&d_brand=vivo&d_model=vivoZ1&osVersion=9&screen=2201*1080&partner=vivo&androidId=c151521cf7c1430f&installtionId=73e5ce8937244403ae1e93dc8d3ecf69&sdkVersion=28&lang=zh_CN&uuid=868602047125517-20f77c733fa1&area=22_1930_50949_52153&networkType=wifi&wifiBssid=bde5dcf42ebb1788f7cbf43dee7f84bb&st=1562203960843&sign=f405e685792fcbf766c5fa0dae4fd506&sv=102";
         String reqBody = "{\"monitor_refer\":\"plant_productTaskList\",\"monitor_source\":\"plant_app_plant_index\"}";
         Header[] appHeaders = builderHeader(appCookie);
         List<NameValuePair> paramList = buildParamList(reqBody);
@@ -249,12 +256,23 @@ public class JD {
 
                         // 获取随机下标(0, 1)
                         int index = CommonUtils.randomModNum(2);
-                        JSONObject productInfo = productInfoArray.getJSONObject(index);
-                        if (!"2".equals(productInfo.getString("taskState"))) {
+                        boolean chosen = false;
+                        for (int m=0;m<2;m++) {
+                            JSONObject tmpProductInfo = productInfoArray.getJSONObject(m);
+                            if (!"2".equals(tmpProductInfo.getString("taskState"))) {
+                                chosen = true;
+                            }
+                        }
+                        if (chosen) {
                             continue;
                         }
+                        JSONObject productInfo = productInfoArray.getJSONObject(index);
+                        System.out.println(productInfo);
+                        String productTaskId = productInfo.getString("productTaskId");
+                        String skuId = productInfo.getString("skuId");
+                        System.out.println(productTaskId + "," + skuId);
 
-                        productNutrientsTask(appCookie, productInfo.getString("productTaskId"), productInfo.getString("skuId"));
+                        productNutrientsTask(appCookie, productTaskId, skuId);
 
                         int sleepNum = CommonUtils.randomNum(8000, 23042);
                         Thread.sleep(sleepNum);
@@ -266,7 +284,7 @@ public class JD {
     }
 
     private static void productNutrientsTask(String appCookie, String productTaskId, String skuId) throws Exception {
-        String url = "http://api.m.jd.com/client.action?functionId=productNutrientsTask&clientVersion=8.1.2&build=67636&client=android&d_brand=vivo&d_model=vivoZ1&osVersion=9&screen=2201*1080&partner=vivo&androidId=c151521cf7c1430f&installtionId=73e5ce8937244403ae1e93dc8d3ecf69&sdkVersion=28&lang=zh_CN&uuid=868602047125517-20f77c733fa1&area=22_1930_50949_52153&networkType=wifi&wifiBssid=unknown&st=1562152334117&sign=082fce91f9acfcf6d4db925cbd4e15ee&sv=100";
+        String url = "http://api.m.jd.com/client.action?functionId=productNutrientsTask&clientVersion=8.1.2&build=67636&client=android&d_brand=vivo&d_model=vivoZ1&osVersion=9&screen=2201*1080&partner=vivo&androidId=c151521cf7c1430f&installtionId=73e5ce8937244403ae1e93dc8d3ecf69&sdkVersion=28&lang=zh_CN&uuid=868602047125517-20f77c733fa1&area=22_1930_50949_52153&networkType=wifi&wifiBssid=bde5dcf42ebb1788f7cbf43dee7f84bb&st=1562204192941&sign=ae9a392b8f5e87c8f8d32765dce1572a&sv=100";
         String reqBody = "{\"monitor_refer\":\"plant_productNutrientsTask\",\"monitor_source\":\"plant_app_plant_index\",\"productTaskId\":\"" + productTaskId + "\",\"skuId\":\"" + skuId + "\"}";
         Header[] appHeaders = builderHeader(appCookie);
         List<NameValuePair> paramList = buildParamList(reqBody);
@@ -284,7 +302,9 @@ public class JD {
     }
 
     private static void cancelFavorite(String appCookie, String skuId) throws Exception {
-        String url = "http://api.m.jd.com/client.action?functionId=cancelFavorite&clientVersion=8.1.2&build=67636&client=android&d_brand=vivo&d_model=vivoZ1&osVersion=9&screen=2201*1080&partner=vivo&androidId=c151521cf7c1430f&installtionId=73e5ce8937244403ae1e93dc8d3ecf69&sdkVersion=28&lang=zh_CN&uuid=868602047125517-20f77c733fa1&area=22_1930_50949_52153&networkType=wifi&wifiBssid=bde5dcf42ebb1788f7cbf43dee7f84bb&st=1562152950466&sign=5504b62221c907a582671ad1fb46e1bb&sv=110";
+        String url = "http://api.m.jd.com/client.action?functionId=cancelFavorite&clientVersion=8.1.2&build=67636&client=android&d_brand=vivo&d_model=vivoZ1&osVersion=9&screen=2201*1080&partner=vivo&androidId=c151521cf7c1430f&installtionId=73e5ce8937244403ae1e93dc8d3ecf69&sdkVersion=28&lang=zh_CN&uuid=868602047125517-20f77c733fa1&area=22_1930_50949_52153&networkType=wifi&wifiBssid=bde5dcf42ebb1788f7cbf43dee7f84bb&st=1562204386777&sign=947bb5662801491e8c163f4e8a1ea6ed&sv=121";
+        // String url = "http://api.m.jd.com/client.action?functionId=cancelFavorite&clientVersion=8.1.2&build=67636&client=android&d_brand=vivo&d_model=vivoZ1&osVersion=9&screen=2201*1080&partner=vivo&androidId=c151521cf7c1430f&installtionId=73e5ce8937244403ae1e93dc8d3ecf69&sdkVersion=28&lang=zh_CN&uuid=868602047125517-20f77c733fa1&area=22_1930_50949_52153&networkType=wifi&wifiBssid=bde5dcf42ebb1788f7cbf43dee7f84bb&st=1562152950466&sign=5504b62221c907a582671ad1fb46e1bb&sv=110";
+        // String reqBody = "{\"wareId\":\"" + skuId + "\"}";
         String reqBody = "{\"wareId\":\"" + skuId + "\"}";
         Header[] appHeaders = builderHeader(appCookie);
         List<NameValuePair> paramList = buildParamList(reqBody);
@@ -293,11 +313,20 @@ public class JD {
         System.out.println("cancelFavorite---->>>>" + cancelJson);
     }
 
+    private static void plantFriendList(String appCookie) {
+        String url = "http://api.m.jd.com/client.action?functionId=plantFriendList&clientVersion=8.1.2&build=67636&client=android&d_brand=vivo&d_model=vivoZ1&osVersion=9&screen=2201*1080&partner=vivo&androidId=c151521cf7c1430f&installtionId=73e5ce8937244403ae1e93dc8d3ecf69&sdkVersion=28&lang=zh_CN&uuid=868602047125517-20f77c733fa1&area=22_1930_50949_52153&networkType=wifi&wifiBssid=bde5dcf42ebb1788f7cbf43dee7f84bb&st=1562205139734&sign=10478a2be4473f78e5db8b4c8c211590&sv=121";
+        String reqBody = "{\"monitor_refer\":\"plantFriendList\",\"monitor_source\":\"plant_app_plant_index\",\"pageNum\":\"1\"}";
+        Header[] appHeaders = builderHeader(appCookie);
+        List<NameValuePair> paramList = buildParamList(reqBody);
 
+        JSONObject plantFriendJson = HttpUtils.postMethodJson(url, paramList, appHeaders);
+        System.out.println("plantFriendList---->>>>" + plantFriendJson);
+    }
 
+    private static void a() {
+        String url = "https://api.m.jd.com/client.action?functionId=lotteryDraw&body=%7B%22actId%22%3A%22jgpqtzjhvaoym%22%2C%22appSource%22%3A%22jdhome%22%2C%22lotteryCode%22%3A%22mwsevpvqu3t57je23kq7pva3wb6e2sbuc4ihzru63p5pso7sqeq5fz65ajnlm2llhiawzpccizuck%22%7D&appid=ld&client=android&clientVersion=8.1.2&networkType=wifi&osVersion=9&uuid=868602047125517-20f77c733fa1&jsonp=jsonp_1562205320367_89675";
 
-
-
+    }
 
 
 
