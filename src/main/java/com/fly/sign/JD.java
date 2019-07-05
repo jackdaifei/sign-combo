@@ -20,7 +20,14 @@ public class JD {
     public static void main(String[] args) throws Exception {
         String cookie = "pin=jackdaifei_m;wskey=AAFbT9AfAEAWGgHkSanFbpfjKXgOiumMdr6hsmtr2NT8oMdHMGiyza11FEh5pRhZjDKGmIvaBKfLN7WYk7n3dJOtSXVkvGPJ;whwswswws=zfKxNSJYpkuxQ2l5Cz9M6SAKwbIQBt9YIF6Fj/545EHilrLsep8ki5XL/aLuKoCgVUaOazA9eTDSkefFN3XT7Xg==;unionwsws={\"devicefinger\":\"eidA2B700114ODY4NjAyMDQ3MTI1NTE3MA==0I7u8gZRJfxuaDVhagH3uQjoCRqDZgV4oZflP8e\\/6uphn9NxD4vvpXaqrAFb0+Oog6wilp42RLPGbnAB\",\"jmafinger\":\"zfKxNSJYpkuxQ2l5Cz9M6SAKwbIQBt9YIF6Fj\\/545EHilrLsep8ki5XL\\/aLuKoCgVUaOazA9eTDSkefFN3XT7Xg==\"};";
         // signBeanIndex(cookie);
-        plantBeanIndex(cookie);
+        while (true) {
+            plantBeanIndex(cookie);
+            int start = 3600 + CommonUtils.randomNum(80, 200);
+            int end = 7600 + CommonUtils.randomNum(99, 300);
+            int sleepNum = CommonUtils.randomNum(1000*start, end*1000);
+            System.out.println("循环sleep" + sleepNum/1000/60 + "m");
+            Thread.sleep(sleepNum);
+        }
 
         // productTaskList(cookie);
     }
