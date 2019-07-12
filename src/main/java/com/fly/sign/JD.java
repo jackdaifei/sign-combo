@@ -19,55 +19,24 @@ public class JD {
 
     public static void main(String[] args) throws Exception {
         String cookie = "pin=jackdaifei_m;wskey=AAFbT9AfAEAWGgHkSanFbpfjKXgOiumMdr6hsmtr2NT8oMdHMGiyza11FEh5pRhZjDKGmIvaBKfLN7WYk7n3dJOtSXVkvGPJ;whwswswws=zfKxNSJYpkuxQ2l5Cz9M6SAKwbIQBt9YIF6Fj/545EHilrLsep8ki5XL/aLuKoCgVUaOazA9eTDSkefFN3XT7Xg==;unionwsws={\"devicefinger\":\"eidA2B700114ODY4NjAyMDQ3MTI1NTE3MA==0I7u8gZRJfxuaDVhagH3uQjoCRqDZgV4oZflP8e\\/6uphn9NxD4vvpXaqrAFb0+Oog6wilp42RLPGbnAB\",\"jmafinger\":\"zfKxNSJYpkuxQ2l5Cz9M6SAKwbIQBt9YIF6Fj\\/545EHilrLsep8ki5XL\\/aLuKoCgVUaOazA9eTDSkefFN3XT7Xg==\"};";
-        // signBeanIndex(cookie);
-        while (true) {
-            plantBeanIndex(cookie);
-            int start = 3600 + CommonUtils.randomNum(80, 200);
-            int end = 7600 + CommonUtils.randomNum(99, 300);
-            int sleepNum = CommonUtils.randomNum(1000*start, end*1000);
-            System.out.println("循环sleep" + sleepNum/1000/60 + "m");
-            Thread.sleep(sleepNum);
-        }
+
+        // while (true) {
+        //     plantBeanIndex(cookie);
+        //     int start = 3600 + CommonUtils.randomNum(80, 200);
+        //     int end = 7600 + CommonUtils.randomNum(99, 300);
+        //     int sleepNum = CommonUtils.randomNum(1000*start, end*1000);
+        //     System.out.println("循环sleep" + sleepNum/1000/60 + "m");
+        //     Thread.sleep(sleepNum);
+        // }
 
         // productTaskList(cookie);
     }
 
-    /**
-     * JD APP 签到
-     * @param appCookie
-     */
-    public static void signBeanIndex(String appCookie) {
-        String signResult = "";
-        try {
-            String url = "http://api.m.jd.com/client.action?functionId=signBeanIndex&clientVersion=8.1.2&build=67636&client=android&d_brand=vivo&d_model=vivoZ1&osVersion=9&screen=2201*1080&partner=vivo&androidId=c151521cf7c1430f&installtionId=73e5ce8937244403ae1e93dc8d3ecf69&sdkVersion=28&lang=zh_CN&uuid=868602047125517-20f77c733fa1&area=22_1930_50949_52154&networkType=wifi&wifiBssid=bde5dcf42ebb1788f7cbf43dee7f84bb&st=1561631287686&sign=42662f04125e8c118ebad9e49ee6d7c3&sv=120";
-            String reqBody = "{\"fp\":\"-1\",\"jda\":\"-1\",\"monitor_refer\":\"\",\"monitor_source\":\"bean_app_bean_index\",\"referUrl\":\"-1\",\"rnVersion\":\"4.0\",\"shshshfp\":\"-1\",\"shshshfpa\":\"-1\",\"userAgent\":\"-1\"}";
-            Header[] appHeaders = builderHeader(appCookie);
-            List<NameValuePair> paramList = buildParamList(reqBody);
-            JSONObject signJson = HttpUtils.postMethodJson(url, paramList, appHeaders);
-            if (null != signJson) {
-                String code = signJson.getString("code");
-                if ("0".equals(code)) {
-                    JSONObject data = signJson.getJSONObject("data");
-                    JSONObject dailyAward = data.getJSONObject("dailyAward");
-                    System.out.print("APP签到--------->>>");
-                    if (null != dailyAward) {
-                        System.out.println(dailyAward.getString("title") + dailyAward.getString("subTitle") + dailyAward.getJSONObject("beanAward").getString("beanCount") + "京豆");
-                    } else {
-                        JSONObject continuityAward = data.getJSONObject("continuityAward");
-                        System.out.println(continuityAward.getString("title") + continuityAward.getJSONObject("beanAward").getString("beanCount") + "京豆");
-                    }
-                }
-            }
-        } catch (Exception e) {
-            System.out.println(signResult);
-            e.printStackTrace();
-        }
-    }
 
     public static void plantBeanIndex(String appCookie) {
         String plantResult = "";
         try {
-            String url = "http://api.m.jd.com/client.action?functionId=plantBeanIndex&clientVersion=8.1.2&build=67636&client=android&d_brand=vivo&d_model=vivoZ1&osVersion=9&screen=2201*1080&partner=vivo&androidId=c151521cf7c1430f&installtionId=73e5ce8937244403ae1e93dc8d3ecf69&sdkVersion=28&lang=zh_CN&uuid=868602047125517-20f77c733fa1&area=22_1930_50949_52154&networkType=wifi&wifiBssid=bde5dcf42ebb1788f7cbf43dee7f84bb&st=1561636588607&sign=6684ff6dee506a6a76bc38ab018efedf&sv=100";
+            String url = "http://api.m.jd.com/client.action?functionId=plantBeanIndex&clientVersion=8.1.2&build=67636&client=android&d_brand=vivo&d_model=vivoZ1&osVersion=9&screen=2201*1080&partner=vivo&androidId=c151521cf7c1430f&installtionId=73e5ce8937244403ae1e93dc8d3ecf69&sdkVersion=28&lang=zh_CN&uuid=868602047125517-20f77c733fa1&area=22_1930_50949_52153&networkType=wifi&wifiBssid=9a26334eabcc7c20902c6619627c1801&st=1562549477857&sign=d556aa0ac7ee7ff498a2d1615bafed45&sv=121";
             String reqBody = "{\"followType\":\"1\",\"monitor_refer\":\"\",\"monitor_source\":\"plant_app_plant_index\",\"shareUuid\":\"\",\"wxHeadImgUrl\":\"\"}";
             Header[] appHeaders = builderHeader(appCookie);
             List<NameValuePair> paramList = buildParamList(reqBody);
@@ -155,7 +124,7 @@ public class JD {
     private static boolean receiveNutrients(String appCookie, String roundId) {
         String receiveResult = "";
         try {
-            String url = "http://api.m.jd.com/client.action?functionId=receiveNutrients&clientVersion=8.1.2&build=67636&client=android&d_brand=vivo&d_model=vivoZ1&osVersion=9&screen=2201*1080&partner=vivo&androidId=c151521cf7c1430f&installtionId=73e5ce8937244403ae1e93dc8d3ecf69&sdkVersion=28&lang=zh_CN&uuid=868602047125517-20f77c733fa1&area=22_1930_50949_52153&networkType=wifi&wifiBssid=bde5dcf42ebb1788f7cbf43dee7f84bb&st=1562133242639&sign=d587f3bcee4fbfa0fa14c0355702d6e3&sv=120";
+            String url = "http://api.m.jd.com/client.action?functionId=receiveNutrients&clientVersion=8.1.2&build=67636&client=android&d_brand=vivo&d_model=vivoZ1&osVersion=9&screen=2201*1080&partner=vivo&androidId=c151521cf7c1430f&installtionId=73e5ce8937244403ae1e93dc8d3ecf69&sdkVersion=28&lang=zh_CN&uuid=868602047125517-20f77c733fa1&area=22_1930_50949_52153&networkType=wifi&wifiBssid=9a26334eabcc7c20902c6619627c1801&st=1562549520205&sign=e5cc2a2000078b239446a195fe212627&sv=100";
             String reqBody = "{\"monitor_refer\":\"plant_receiveNutrients\",\"monitor_source\":\"plant_app_plant_index\",\"roundId\":\"" + roundId + "\"}";
             Header[] appHeaders = builderHeader(appCookie);
             List<NameValuePair> paramList = buildParamList(reqBody);
@@ -187,7 +156,7 @@ public class JD {
     private static boolean cultureBean(String appCookie, String roundId) {
         String cultureResult = "";
         try {
-            String url = "http://api.m.jd.com/client.action?functionId=cultureBean&clientVersion=8.1.2&build=67636&client=android&d_brand=vivo&d_model=vivoZ1&osVersion=9&screen=2201*1080&partner=vivo&androidId=c151521cf7c1430f&installtionId=73e5ce8937244403ae1e93dc8d3ecf69&sdkVersion=28&lang=zh_CN&uuid=868602047125517-20f77c733fa1&area=22_1930_50949_52153&networkType=wifi&wifiBssid=bde5dcf42ebb1788f7cbf43dee7f84bb&st=1562133327154&sign=7e7fa50d3f9d796ff2ccfac027279309&sv=110";
+            String url = "http://api.m.jd.com/client.action?functionId=cultureBean&clientVersion=8.1.2&build=67636&client=android&d_brand=vivo&d_model=vivoZ1&osVersion=9&screen=2201*1080&partner=vivo&androidId=c151521cf7c1430f&installtionId=73e5ce8937244403ae1e93dc8d3ecf69&sdkVersion=28&lang=zh_CN&uuid=868602047125517-20f77c733fa1&area=22_1930_50949_52153&networkType=wifi&wifiBssid=9a26334eabcc7c20902c6619627c1801&st=1562549550337&sign=ff9406f17bd5fc83f1fa58df8229e0a3&sv=120";
             String reqBody = "{\"monitor_refer\":\"plant_index\",\"monitor_source\":\"plant_app_plant_index\",\"roundId\":\"" + roundId + "\"}";
             System.out.println(roundId);
             Header[] appHeaders = builderHeader(appCookie);
@@ -225,8 +194,7 @@ public class JD {
     private static void purchaseRewardTask(String appCookie, String roundId) {
         String purchaseResult = "";
         try {
-            // String url = "http://api.m.jd.com/client.action?functionId=purchaseRewardTask&clientVersion=8.1.2&build=67636&client=android&d_brand=vivo&d_model=vivoZ1&osVersion=9&screen=2201*1080&partner=vivo&androidId=c151521cf7c1430f&installtionId=73e5ce8937244403ae1e93dc8d3ecf69&sdkVersion=28&lang=zh_CN&uuid=868602047125517-20f77c733fa1&area=22_1930_50949_52154&networkType=wifi&wifiBssid=unknown&st=1561796734430&sign=ff5ff58e8639e1d21b7e6c494e78c05b&sv=111";
-            String url = "http://api.m.jd.com/client.action?functionId=purchaseRewardTask&clientVersion=8.1.2&build=67636&client=android&d_brand=vivo&d_model=vivoZ1&osVersion=9&screen=2201*1080&partner=vivo&androidId=c151521cf7c1430f&installtionId=73e5ce8937244403ae1e93dc8d3ecf69&sdkVersion=28&lang=zh_CN&uuid=868602047125517-20f77c733fa1&area=22_1930_50949_52153&networkType=wifi&wifiBssid=bde5dcf42ebb1788f7cbf43dee7f84bb&st=1562203751288&sign=a75d78719e262c0e08bebee7d06b069d&sv=122";
+            String url = "http://api.m.jd.com/client.action?functionId=purchaseRewardTask&clientVersion=8.1.2&build=67636&client=android&d_brand=vivo&d_model=vivoZ1&osVersion=9&screen=2201*1080&partner=vivo&androidId=c151521cf7c1430f&installtionId=73e5ce8937244403ae1e93dc8d3ecf69&sdkVersion=28&lang=zh_CN&uuid=868602047125517-20f77c733fa1&area=22_1930_50949_52153&networkType=wifi&wifiBssid=9a26334eabcc7c20902c6619627c1801&st=1562549642657&sign=60547fc73f5b3ef84b42ea34d614bb4c&sv=120";
             String reqBody = "{\"monitor_refer\":\"plant_purchaseRewardTask\",\"monitor_source\":\"plant_app_plant_index\",\"roundId\":\"" + roundId + "\"}";
             // String reqBody = "{\"monitor_refer\":\"plant_purchaseRewardTask\",\"monitor_source\":\"plant_app_plant_index\",\"roundId\":\"ru72anf4ao52moqbns6eertieu\"}";
 
